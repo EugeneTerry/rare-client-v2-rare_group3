@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { useHistory } from 'react-router-dom'
-import { deleteTag, getTags } from "./TagManager"
+import { TagContext } from "./TagProvider";
 
 
 
 export const TagList = () => {
 
     const [tags, setTags] = useState([])
+    const {deleteTag, getTags} = useContext(TagContext)
     
     const handleDelete = (id) => {
         deleteTag(id)

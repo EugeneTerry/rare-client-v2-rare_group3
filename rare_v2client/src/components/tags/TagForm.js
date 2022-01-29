@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { useParams, useHistory } from "react-router"
-import { getTags, editTags } from "./TagManager"
+import { TagContext } from "./TagProvider";
 
 export const TagForm = () => {
     const history = useHistory()
+    const {getTags, editTags} = useContext(TagContext)
     
     const [tags, setTags] = useState([])
     const [tag, setTag] = useState({label: ''})
