@@ -4,22 +4,16 @@ import { TagContext } from "./TagProvider";
 
 export const TagForm = () => {
     const history = useHistory()
-    const {getTags, editTags} = useContext(TagContext)
+    const {getTagById, editTags} = useContext(TagContext)
     
-    const [tags, setTags] = useState([])
     const [tag, setTag] = useState({label: ''})
     const [newTag, setNewTag] = useState({})
 
     const { tagId } = useParams()
 
     useEffect(() => {
-        getTags().then((data) => setTags(data))
+       tagId && getTagById(tagId).then((data) => setTag(data))
     }, [])
-
-    useEffect(() => {
-        const tag = tags.find(tag => tag.id === parseInt(tagId)) || {label: ''}
-        setTag(tag)
-    }, [tags, tagId])
 
 
     const handleControlledInputChange = (event) => {

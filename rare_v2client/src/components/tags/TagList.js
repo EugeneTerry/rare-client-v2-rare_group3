@@ -4,10 +4,10 @@ import { TagContext } from "./TagProvider";
 
 
 
-export const TagList = () => {
+export const TagList = (props) => {
 
-    const [tags, setTags] = useState([])
-    const {deleteTag, getTags} = useContext(TagContext)
+    const [deleteTag, setTags] = useState([])
+    const {tags, getTags} = useContext(TagContext)
     
     const handleDelete = (id) => {
         deleteTag(id)
@@ -24,7 +24,7 @@ export const TagList = () => {
     const history = useHistory()
 
     return(
-        <>
+        
         <div className='tags'>
             <h2 className='tags_title'>Tags</h2>
             <button onClick={() => history.push("/tags/create")}>
@@ -34,17 +34,17 @@ export const TagList = () => {
                 {
                 tags.map(tag => {
                     return (
-                        <li>
+                        <li key={tag.id}>
                           {tag.label}
-                          <button className='tags_edit' 
-                          onClick={() => {history.push(`/tags/edit/${tag.id}`)}}>Edit Tag</button>
-                          <button onClick={() => {handleDelete(tag.id)}}>Delete Tag</button>
+                          <button className='settings_btn' 
+                          onClick={() => {history.push(`/tags/edit/${tag.id}`)}}>🖊</button>
+                          <button className='delete_btn' onClick={() => {handleDelete(tag.id)}}>🚫</button>
                         </li>
                     )
                 })
                 }
             </ul>
         </div>
-    </>
+   
     )
 }

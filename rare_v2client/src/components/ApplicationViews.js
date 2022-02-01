@@ -11,6 +11,7 @@ import { TagList } from "./tags/TagList"
 import { TagForm } from "./tags/TagForm"
 import { TagDetail } from "./tags/TagDetail"
 import { MyPosts } from './posts/MyPosts'
+import { TagProvider } from "./tags/TagProvider"
 
 
 export const ApplicationViews = () => {
@@ -57,16 +58,17 @@ export const ApplicationViews = () => {
                 <MyPosts />
             </Route>
             </PostProvider>
-
-            <Route exact path='/tags'>
-                <TagList />
-            </Route>
-            <Route path='/tags/create'>
-                <TagDetail />
-            </Route>
-            <Route path='/tags/edit/:tagId(\d+)'>
-                <TagForm />
-            </Route>
+            <TagProvider>
+                <Route exact path='/tags'>
+                    <TagList />
+                </Route>
+                <Route path='/tags/create'>
+                    <TagForm />
+                </Route>
+                <Route path='/tags/edit/:tagId(\d+)'>
+                    <TagForm />
+                </Route>
+            </TagProvider>
         </main>
     </>
 }
