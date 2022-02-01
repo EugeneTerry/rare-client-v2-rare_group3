@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useParams, useHistory } from "react-router";
-import { addPost, editPost, getPostById } from "./PostManager";
+import { PostContext } from "./PostProvider";
 import { getCategories } from "../categories/CategoryManager";
 
 export const PostForm = () => {
   const [categories, setCategories] = useState([])
+  const { addPost, editPost, getPostById } = useContext(PostContext)
   const {postId} = useParams()
   const [post, setPost] = useState({})
   const history = useHistory()
@@ -45,7 +46,7 @@ export const PostForm = () => {
           user_id: parseInt(localStorage.getItem("rare_user_id"))
         })
           .then (() => history.push("/posts"))
-          
+
       } else {
         addPost({
           title: post.title,
@@ -71,8 +72,8 @@ export const PostForm = () => {
           <input type="text" title="title" required autoFocus className="form-control"
           placeholder="Post title"
           defaultValue={post.title}
-          onChange={handleInputChange} 
-          />         
+          onChange={handleInputChange}
+          />
         </div>
       </fieldset>
       <fieldset>
@@ -81,8 +82,8 @@ export const PostForm = () => {
           <input type="text" title="image_url" required autoFocus className="form-control"
           placeholder="Image Url"
           defaultValue={post.image_url}
-          onChange={handleInputChange} 
-          />         
+          onChange={handleInputChange}
+          />
         </div>
       </fieldset>
       <fieldset>
@@ -91,8 +92,8 @@ export const PostForm = () => {
           <input type="text" title="content" required autoFocus className="form-control"
           placeholder="Post content"
           defaultValue={post.content}
-          onChange={handleInputChange} 
-          />         
+          onChange={handleInputChange}
+          />
         </div>
       </fieldset>
       <fieldset>
@@ -109,10 +110,10 @@ export const PostForm = () => {
                   </option>
                 ))
               }
-            </select>        
+            </select>
         </div>
       </fieldset>
-      <button type="submit" 
+      <button type="submit"
         onClick={evt => {
           evt.preventDefault()
           createNewPost()

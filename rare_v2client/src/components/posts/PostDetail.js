@@ -1,7 +1,7 @@
 import React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useParams, useHistory } from "react-router"
-import { getPosts } from "./PostManager"
+import { PostContext } from "./PostProvider"
 import { CommentList } from "../comments/CommentList"
 
 
@@ -10,6 +10,7 @@ export const PostDetail = () => {
     const [posts, setPosts] = useState([])
     const [post, setPost] = useState({user:{username:''}})
     const {postId} = useParams()
+    const { getPosts } = useContext(PostContext)
     const history = useHistory()
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export const PostDetail = () => {
     }, [])
 
     useEffect(() => {
-        const thePost = posts.find(post => post.id === parseInt(postId)) 
+        const thePost = posts.find(post => post.id === parseInt(postId))
         || {image_url:'', user_id:'', publication_date:'', content:'', user:{username:''}}
         setPost(thePost)
     }, [postId, posts])

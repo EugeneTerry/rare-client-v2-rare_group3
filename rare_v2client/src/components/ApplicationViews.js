@@ -1,11 +1,12 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import { CategoryList } from "./categories/CategoryList"
-import { CategoryCreate } from "./categories/CategoryCreate" 
+import { CategoryCreate } from "./categories/CategoryCreate"
 import { CategoryForm } from "./categories/CategoryForm"
 import { PostList } from "./posts/PostList"
 import { PostDetail } from './posts/PostDetail'
 import { PostForm } from "./posts/PostForm"
+import { PostProvider } from "./posts/PostProvider.js"
 import { TagList } from "./tags/TagList"
 import { TagForm } from "./tags/TagForm"
 import { TagDetail } from "./tags/TagDetail"
@@ -18,7 +19,7 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-          
+
             <Route exact path='/categories'>
                 <CategoryList />
             </Route>
@@ -31,6 +32,7 @@ export const ApplicationViews = () => {
                 <CategoryForm />
             </Route>
 
+        <PostProvider>
             <Route exact path='/'>
                 <PostList />
             </Route>
@@ -38,7 +40,7 @@ export const ApplicationViews = () => {
             <Route exact path='/posts/create'>
                 <PostForm />
             </Route>
-            
+
             <Route path='/posts/edit/:postId(\d+)'>
                 <PostForm />
             </Route>
@@ -54,7 +56,8 @@ export const ApplicationViews = () => {
             <Route path='/myposts'>
                 <MyPosts />
             </Route>
-            
+            </PostProvider>
+
             <Route exact path='/tags'>
                 <TagList />
             </Route>
