@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import  {getPosts} from "./PostManager";
+import  {PostContext} from "./PostProvider.js"
 
-export const PostList = () => {
-  const [ posts, setPosts] = useState([])
+export const PostList = (props) => {
+  const [ post, setPost] = useState([])
   const history = useHistory()
+  const { posts, getPosts } = useContext(PostContext)
 
   useEffect(() => {
-    getPosts().then(postsData => setPosts(postsData))
+    getPosts().then(postsData => setPost(postsData))
   }, [])
 
   return(
-    <div>
-      <h2>Posts</h2>
-      <article>
-        {
-          posts.map(post => {
-            return <section key={post.id}>
-              <ul>
-                <Link to={`/posts/${post.id}`}>{post.title}</Link><br/>
-              </ul>
+    <article className="posts">
+      <header className="post_header">
+        <h3>Posts</h3>
+      </header>
+        {posts.map((p) => {
+            return (
+            <section key={p.id} id={`post--${p.id}`}>
+                <div className="post_title">
+                  <h4>{p.title}</h4>
+                </div>
             </section>
-          })
-        }
-      </article>
-      <button onClick={() => history.push("/posts/create")}>Create Post</button>
-    </div>
-  )
-}
+            )
+        })}
+    </article>
+  )}

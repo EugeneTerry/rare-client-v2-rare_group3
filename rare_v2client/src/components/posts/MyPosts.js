@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getPosts } from "./PostManager";
+import React, { useEffect, useState, useContext } from "react";
+import { PostContext } from "./PostProvider";
 
 export const MyPosts = () => {
     const [posts, setPosts] = useState([])
     const [myPosts, setMyPosts] = useState([])
+    const { getPosts } = useContext(PostContext)
 
     const userId = localStorage.getItem('rare_user_id')
 
