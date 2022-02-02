@@ -6,19 +6,18 @@ import { TagContext } from "./TagProvider";
 
 export const TagList = (props) => {
 
-    const [deleteTag, setTags] = useState([])
-    const {tags, getTags} = useContext(TagContext)
+
+    const {deleteTag, tags, getTags} = useContext(TagContext)
     
     const handleDelete = (id) => {
         deleteTag(id)
         .then(() => {
-            const remainingTags = tags.filter( tag => tag.id !== id )
-            setTags(remainingTags)
+
         })
     }
 
     useEffect(() => {
-        getTags().then((data) => setTags(data))
+        getTags()
     }, [])
 
     const history = useHistory()
@@ -36,9 +35,11 @@ export const TagList = (props) => {
                     return (
                         <li key={tag.id}>
                           {tag.label}
-                          <button className='settings_btn' 
-                          onClick={() => {history.push(`/tags/edit/${tag.id}`)}}>🖊</button>
-                          <button className='delete_btn' onClick={() => {handleDelete(tag.id)}}>🚫</button>
+                          <div>
+                            <button className='settings_btn' 
+                            onClick={() => {history.push(`/tags/edit/${tag.id}`)}}>🖊</button>
+                            <button className='delete_btn' onClick={() => {handleDelete(tag.id)}}>🚫</button>
+                          </div>
                         </li>
                     )
                 })
