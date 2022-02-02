@@ -1,15 +1,15 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { useParams, useHistory } from "react-router"
-import { getCategories, editCategories } from "./CategoryManager"
+import { CategoryContext} from "./CategoryProvider"
 
 export const CategoryForm = () => {
     const history = useHistory()
     
-    const [categories, setCategories] = useState([])
+    const [category, setCategories] = useState([])
     const [theCategory, setTheCategory] = useState({label: ''})
     const [newCategory, setNewCategory] = useState({})
-
+    const {categories,getCategories , editCategory} = useContext(CategoryContext)
     const { categoryId } = useParams()
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export const CategoryForm = () => {
     const handleSaveEdit = (e) => {
         e.preventDefault()
 
-        editCategories({
+        editCategory({
             id: theCategory.id,
             label: newCategory.label
         }).then(() =>{
