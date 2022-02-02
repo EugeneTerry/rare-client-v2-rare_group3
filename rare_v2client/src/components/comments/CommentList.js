@@ -1,38 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import  {getComments} from "./CommentManager";
+import  { CommentContext } from "./CommentProvider";
+import { PostContext } from "../posts/PostProvider"
 
-export const CommentList = ({postId}) => {
-  const [ comments, setComments] = useState([])
-  const [ theComments, setTheComments] = useState([])
-  const history = useHistory()
+export const CommentList = (props) => {
+	const history = useHistory()
+  const [ comment, setComment ] = useState([])
+  const { comments, getComments } = useContext(CommentContext)
+	const [ showComment, setShowComment ] = useState(false)
+	const { posts } = useContext(PostContext)
+
 
   useEffect(() => {
-    getComments().then((data)=> setComments((data)))
+    getComments().then((data)=> setComment((data)))
   }, [])
 
-  useEffect(() => {
-    const relatedComments = comments.filter(comment => comment.post_id === postId )
-    setTheComments(relatedComments)
-  },[comments, postId])
+  // useEffect(() => {
+  //   const relatedComments = comments.filter(comment => comment.post_id === postId )
+  //   setTheComments(relatedComments)
+  // },[comments, postId])
 
 
   return(
     <div>
       <h2>Comments</h2>
       <ul>
-        { 
-        theComments.length > 0?
-          theComments.map(comment => {
-            return <section key={comment.id}>
-              <li>
-                <p>{comment.content}</p>
-              </li>
-            </section>
-          }):""
-        }
-      </ul>
-      <button>Add Comment</button>
-    </div>
-  )
-}
+			{comments.map((c) => {
+				if (c.post.id === posts.id) {
+					return (
+						<div className="comments" key={c.post} id={`comments--${c.post}`}>
+							<div className="comment_author" value={c.author}>
+								{c.author.name}
+							</div>
+							<div className="comment_content">
+								{c.content}
+							</div>
+							<div className="comment_created_on">
+								{c.created_on}
+							</div>
+						</div>
+					)
+				}})}
+</ul>
+</div>
+)}

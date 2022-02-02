@@ -3,6 +3,8 @@ import { Route } from "react-router-dom"
 import { CategoryList } from "./categories/CategoryList"
 import { CategoryCreate } from "./categories/CategoryCreate"
 import { CategoryForm } from "./categories/CategoryForm"
+import { CommentProvider } from "./comments/CommentProvider"
+import { CommentList } from "./comments/CommentList"
 import { PostList } from "./posts/PostList"
 import { PostDetail } from './posts/PostDetail'
 import { PostForm } from "./posts/PostForm"
@@ -33,6 +35,7 @@ export const ApplicationViews = () => {
             </Route>
 
         <PostProvider>
+        <CommentProvider>
             <Route exact path='/'>
                 <PostList />
             </Route>
@@ -47,6 +50,7 @@ export const ApplicationViews = () => {
 
             <Route exact path='/posts'>
                 <PostList />
+                <CommentList />
             </Route>
 
             <Route path='/posts/:postId(\d+)'>
@@ -56,6 +60,7 @@ export const ApplicationViews = () => {
             <Route path='/myposts'>
                 <MyPosts />
             </Route>
+            </CommentProvider>
             </PostProvider>
 
             <Route exact path='/tags'>
