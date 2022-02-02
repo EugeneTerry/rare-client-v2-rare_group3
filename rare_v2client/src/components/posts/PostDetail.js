@@ -1,39 +1,76 @@
-import React from "react"
-import { useEffect, useState, useContext } from "react"
-import { useParams, useHistory } from "react-router"
-import { PostContext } from "./PostProvider"
-import { CommentList } from "../comments/CommentList"
-
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { PostContext } from "./PostProvider.js";
+import { CommentContext } from "../comments/CommentProvider";
+import "./Post.css";
 
 export const PostDetail = () => {
+  const history = useHistory();
+  const [post, setPost] = useState([]);
+  const { posts, getPosts, getPostById, deletePost } = useContext(PostContext);
+  const { comments, getComments, deleteComment } = useContext(CommentContext);
+  const rareuser_id = parseInt(localStorage.getItem("rare_user_id"));
+  const { postId } = useParams()
 
-    const [posts, setPosts] = useState([])
-    const [post, setPost] = useState({user:{username:''}})
-    const {postId} = useParams()
-    const { getPosts } = useContext(PostContext)
-    const history = useHistory()
 
-    useEffect(() => {
-        getPosts().then((data) => {setPosts(data)})
-    }, [])
+  useEffect(() => {
+      getPostById(postId)
+        .then(setPost)
+        getComments()
+  })
 
-    useEffect(() => {
-        const thePost = posts.find(post => post.id === parseInt(postId))
-        || {image_url:'', user_id:'', publication_date:'', content:'', user:{username:''}}
-        setPost(thePost)
-    }, [postId, posts])
+  const handleDelete = id => () => {
+    deleteComment(id)
+      .then(() => {
+        history.push("/")
+      })
+  }
 
-    return (
-        <div className='post_detail'>
-            <h3 className='post_detail_title'>{post.title}</h3>
-            <img src={post.image_url} alt='post_image' className='post_detail_img'/>
-            <p className='post_detail_date'>Posted on {post.publication_date}</p>
-            <p className='post_detail_user'>Posted by user {post.user.username}</p>
-             <div className='post_detail_comments'>
-                <CommentList postId = {parseInt(postId)}/>
+
+  return (
+    <article className="post_list">
+      <button onClick={() => history.push("/posts/create")}>Create Post</button>
+
+      <header className="post_header">
+        <h2>Posts</h2>
+      </header>
+          <section className="post_detail">
+            <Link className="post_user" to={`/rareusers/$`}></Link>
+            <div className="post_title">
+              <h4>{post.title}</h4>
             </div>
-            <button onClick={() => {
-                history.push(`/posts/edit/${post.id}`)}}>Edit</button>
-        </div>
-    )
-}
+            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{post.publication_date}</div>
+            <img
+              className="post_image"
+              src={post.image_url}
+              width="500px"
+              height="350px"
+            />
+            <div className="post_content">{post.content}</div>
+            <div>
+              <h2 style={{fontSize: "16px"}}>Comments</h2>
+              <ul style={{background: "lightGray"}}>
+                {comments.map((c) => {
+                  if (c.post.id === post.id) {
+                    return (
+                      <div
+                        className="comments"
+                        key={c.post}
+                        id={`comments--${c.post}`}
+                      >
+                        <div className="comment_author" value={c.author}>
+                          <b>{c.author.name}</b>
+                        </div>
+                        <div className="comment_content" style={{fontSize: "14px"}}>{c.content}</div>
+                        <button onClick={handleDelete(c.id)} hidden={c.author === rareuser_id ? "" : "hidden"}>Delete</button>
+                        <div className="comment_created_on" style={{fontSize: "8px"}}>{c.created_on}</div>
+                      </div>
+                    );
+                  }
+                })}
+              </ul>
+            </div>
+          </section>
+    </article>
+  );
+};

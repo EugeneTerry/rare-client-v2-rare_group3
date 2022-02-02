@@ -20,7 +20,7 @@ export const deleteCategory = (category_id) => {
     })
         .then(getCategories)
 }
-  
+
 export const editCategories = (category) => {
     return fetch(`http://localhost:8000/categories/${category.id}`, {
         method: 'PUT',
