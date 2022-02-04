@@ -1,5 +1,5 @@
 import React from "react"
-import { Route } from "react-router-dom"
+import { Route, Router } from "react-router-dom"
 import { CategoryList } from "./categories/CategoryList"
 import { CategoryCreate } from "./categories/CategoryCreate"
 import { CategoryForm } from "./categories/CategoryForm"
@@ -11,9 +11,10 @@ import { PostForm } from "./posts/PostForm"
 import { PostProvider } from "./posts/PostProvider.js"
 import { TagList } from "./tags/TagList"
 import { TagForm } from "./tags/TagForm"
-import { TagDetail } from "./tags/TagDetail"
 import { MyPosts } from './posts/MyPosts'
 import { TagProvider } from "./tags/TagProvider"
+import { RareUserList } from "./rareusers/RareUserList"
+import { RareUserProvider } from "./rareusers/RareuserProvider"
 
 
 export const ApplicationViews = () => {
@@ -35,6 +36,7 @@ export const ApplicationViews = () => {
                 <CategoryForm />
             </Route>
 
+        <RareUserProvider>
         <PostProvider>
         <CommentProvider>
             <Route exact path='/'>
@@ -61,8 +63,12 @@ export const ApplicationViews = () => {
             <Route path='/myposts'>
                 <MyPosts />
             </Route>
+            <Route exact path="/profile">
+                <RareUserList />
+            </Route>
             </CommentProvider>
             </PostProvider>
+            </RareUserProvider>
             <TagProvider>
                 <Route exact path='/tags'>
                     <TagList />
