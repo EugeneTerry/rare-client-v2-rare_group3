@@ -15,7 +15,9 @@ import { MyPosts } from './posts/MyPosts'
 import { TagProvider } from "./tags/TagProvider"
 import { RareUserList } from "./rareusers/RareUserList"
 import { RareUserProvider } from "./rareusers/RareuserProvider"
-
+import { ReactionProvider } from "./reactions/ReactionProvider"
+import { PostReactions } from "./reactions/PostReaction"
+import { MyReactions } from "./reactions/PostReaction"
 
 export const ApplicationViews = () => {
     return <>
@@ -39,6 +41,7 @@ export const ApplicationViews = () => {
         <RareUserProvider>
         <PostProvider>
         <CommentProvider>
+        <ReactionProvider>
             <Route exact path='/'>
                 <PostList />
             </Route>
@@ -63,9 +66,17 @@ export const ApplicationViews = () => {
             <Route path='/myposts'>
                 <MyPosts />
             </Route>
+
             <Route exact path="/profile">
                 <RareUserList />
             </Route>
+
+
+            <Route path='/reactions'>
+                <MyReactions />
+            </Route>
+
+            </ReactionProvider>
             </CommentProvider>
             </PostProvider>
             </RareUserProvider>
