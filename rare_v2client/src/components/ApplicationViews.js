@@ -60,6 +60,7 @@ export const ApplicationViews = () => {
 
             <Route path='/posts/:postId(\d+)'>
                 <PostDetail />
+                <MyReactions />
             </Route>
 
             <Route path='/myposts'>

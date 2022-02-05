@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react"
 import { useParams, useHistory } from "react-router"
 import { ReactionContext } from "./ReactionProvider";
 
-// This is
+// This is form is for the admin to create a new reaction ????
 
 export const ReactionForm = () => {
     const history = useHistory()
