@@ -35,7 +35,7 @@ export const SubscriptionCreate = () => {
             <h2 className="categoryForm_title">New Category</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="label">Category: </label>
+                    <label htmlFor="label">Subscription: </label>
                     <input type="text" id="label" ref={label} required autoFocus className="form-control" placeholder="Category" onChange={handleControlledInputChange} defaultValue={subscription.label} />
                 </div>
             </fieldset>
@@ -45,7 +45,7 @@ export const SubscriptionCreate = () => {
                     handleSaveCategory()
                 }}
                 className="btn btn-primary">
-                    Save Category
+                    Save Subscription
                 </button>
         </form>
     )
