@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 export const ReactionContext = React.createContext();
 
 export const ReactionProvider = (props) => {
