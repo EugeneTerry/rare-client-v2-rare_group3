@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useContext} from "react";
 import { useParams, useHistory } from "react-router";
 import { PostContext } from "./PostProvider";
-import { getCategories } from "../categories/CategoryManager";
+import { CategoryContext } from "../categories/CategoryProvider"
 
 export const PostForm = () => {
   const [categories, setCategories] = useState([])
   const { addPost, editPost, getPostById } = useContext(PostContext)
+  const { getCategories } = useContext(CategoryContext)
   const {postId} = useParams()
   const [post, setPost] = useState({})
   const history = useHistory()

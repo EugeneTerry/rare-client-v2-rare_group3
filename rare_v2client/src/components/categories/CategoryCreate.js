@@ -4,7 +4,6 @@ import {CategoryContext} from "./CategoryProvider"
 
 export const CategoryCreate = () => {
     const label = useRef()
-
     const history = useHistory()
     const {category_id} = useParams()
     const { category, addCategory, getCategories, setCategory } = useContext(CategoryContext)

@@ -14,6 +14,7 @@ import { TagForm } from "./tags/TagForm"
 import { TagDetail } from "./tags/TagDetail"
 import { MyPosts } from './posts/MyPosts'
 import { TagProvider } from "./tags/TagProvider"
+import { CategoryProvider } from "./categories/CategoryProvider"
 
 
 export const ApplicationViews = () => {
@@ -22,7 +23,7 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-
+            <CategoryProvider>
             <Route exact path='/categories'>
                 <CategoryList />
             </Route>
@@ -74,6 +75,7 @@ export const ApplicationViews = () => {
                     <TagForm />
                 </Route>
             </TagProvider>
+            </CategoryProvider>
         </main>
     </>
 }
