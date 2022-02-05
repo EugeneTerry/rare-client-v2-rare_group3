@@ -1,36 +1,8 @@
-<<<<<<< HEAD
-import React from "react"
-import { Route } from "react-router-dom"
-import { CategoryList } from "./categories/CategoryList"
-import { CategoryCreate } from "./categories/CategoryCreate"
-import { CategoryForm } from "./categories/CategoryForm"
-import { CommentProvider } from "./comments/CommentProvider"
-import { CommentList } from "./comments/CommentList"
-import { PostList } from "./posts/PostList"
-import { PostDetail } from './posts/PostDetail'
-import { PostForm } from "./posts/PostForm"
-import { PostProvider } from "./posts/PostProvider.js"
-import { TagList } from "./tags/TagList"
-import { TagForm } from "./tags/TagForm"
-import { TagDetail } from "./tags/TagDetail"
-import { MyPosts } from './posts/MyPosts'
-import { TagProvider } from "./tags/TagProvider"
-import { CategoryProvider } from "./categories/CategoryProvider"
-
-
-export const ApplicationViews = () => {
-    return <>
-        <main style={{
-            margin: "5rem 2rem",
-            lineHeight: "1.75rem"
-        }}>
-            <CategoryProvider>
-            <Route exact path='/categories'>
-                <CategoryList />
-            </Route>
-=======
 import React from "react";
 import { Route, Router } from "react-router-dom";
+import { SubscriptionProvider } from "./Subscriptions/SubscriptionProvider";
+import { SubscriptionList } from "./Subscriptions/SubsciptionList"
+import { CategoryProvider } from "./categories/CategoryProvider";
 import { CategoryList } from "./categories/CategoryList";
 import { CategoryCreate } from "./categories/CategoryCreate";
 import { CategoryForm } from "./categories/CategoryForm";
@@ -48,21 +20,18 @@ import { RareUserList } from "./rareusers/RareUserList";
 import { RareUserProvider } from "./rareusers/RareuserProvider";
 import { ReactionProvider } from "./reactions/ReactionProvider";
 import { MyReactions } from "./reactions/PostReaction";
-import { PostReactions } from "./reactions/PostReaction";
 
 export const ApplicationViews = () => {
-  return (
-    <>
-      <main
-        style={{
-          margin: "5rem 2rem",
-          lineHeight: "1.75rem",
-        }}
-      >
-        <Route exact path="/categories">
+  return <>
+    <main style={{
+      margin: "5rem 2rem",
+      lineHeight: "1.75rem"
+    }}>
+      <CategoryProvider>
+        <Route exact path='/categories'>
           <CategoryList />
         </Route>
->>>>>>> 8d5513da706c41d5180d75b183529c50488a94b8
+
 
         <Route path="/categories/create">
           <CategoryCreate />
@@ -95,6 +64,7 @@ export const ApplicationViews = () => {
 
                 <Route path="/posts/:postId(\d+)">
                   <PostDetail />
+                  <MyReactions />
                 </Route>
 
                 <Route path="/myposts">
@@ -108,11 +78,6 @@ export const ApplicationViews = () => {
                 <Route path="/reactions">
                   <MyReactions />
                 </Route>
-<<<<<<< HEAD
-            </TagProvider>
-            </CategoryProvider>
-        </main>
-=======
               </ReactionProvider>
             </CommentProvider>
           </PostProvider>
@@ -127,9 +92,14 @@ export const ApplicationViews = () => {
           <Route path="/tags/edit/:tagId(\d+)">
             <TagForm />
           </Route>
+          <SubscriptionProvider>
+          <Route exact path="/subscriptions">
+            <SubscriptionList />
+          </Route>
+          </SubscriptionProvider>
         </TagProvider>
-      </main>
->>>>>>> 8d5513da706c41d5180d75b183529c50488a94b8
-    </>
-  );
+      </CategoryProvider>
+    </main>
+  </>
 };
+

@@ -32,7 +32,7 @@ export const SubscriptionList = (props) => {
                 </button>
                 <ul className='subscriptions_list'>
                     {
-                        categories.map(subscription => {
+                        subscriptions.map(subscription => {
                             return (
                                 <li>
                                     {subscription.label}
