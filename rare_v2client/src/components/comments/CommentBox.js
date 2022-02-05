@@ -13,7 +13,7 @@ export const CommentBox = () => {
     const rareuser = parseInt(localStorage.getItem("rare_user_id"))
 
     const [comment, setComment] = useState({
-        post: 0,
+        post: 1,
         author: rareuser,
         content: "",
         created_on: Date.now()
@@ -25,6 +25,7 @@ export const CommentBox = () => {
                 getCommentById(parseInt(commentId))
                 .then(comment => {
                     setComment(comment)
+                    setIsLoading(false)
                 })
             } else {
                 setIsLoading(false)
@@ -40,7 +41,7 @@ export const CommentBox = () => {
 
     const handleSaveComment = (e) => {
         const postId = parseInt(comment.post)
-        if (commentId) {
+        if (updateComment) {
             editComment({
                 id: comment.id,
                 post: postId,
@@ -64,12 +65,12 @@ export const CommentBox = () => {
 
     return (
         <form className="comments">
-            <input className="comment_content" placeholder="Write a comment..." onChange={handleControlInputChange} value={comment.content} />
+            <input type="text" required autoFocus className="comment_content" id="content"placeholder="Write a comment..." onChange={handleControlInputChange} value={comment.content} />
             <button className="saveComment" disabled={isLoading} onClick={(e) => {
                 e.preventDefault();
                 handleSaveComment()
             }}>
-                {commentId ? <>Update</> : <>Add</>}
+                {commentId ? <>Add</> : <>Update</>}
             </button>
         </form>
     )
