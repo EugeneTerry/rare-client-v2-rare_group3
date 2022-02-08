@@ -14,6 +14,11 @@ export const PostDetail = () => {
   const rareuser_id = parseInt(localStorage.getItem("rare_user_id"));
   const { postId } = useParams()
 
+  const reloadComments = () => {
+      window.location.reload()
+
+  }
+
 
   useEffect(() => {
       getPostById(postId)
@@ -73,7 +78,7 @@ export const PostDetail = () => {
                 })}
               </ul>
               <div className="commentBox">
-                <CommentBox />
+                <CommentBox reloadComments={reloadComments}/>
               </div>
             </div>
           </section>

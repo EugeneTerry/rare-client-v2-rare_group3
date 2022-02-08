@@ -25,7 +25,7 @@ export const CommentProvider = (props) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("rare_user_id")}`
+            Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
         },
         body: JSON.stringify(comment)
     })
