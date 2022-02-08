@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { getCategories } from "./CategoryManager";
-import { addCategory } from "./CategoryManager";
+import {CategoryContext} from "./CategoryProvider"
 
 export const CategoryCreate = () => {
     const label = useRef()
-
     const history = useHistory()
     const {category_id} = useParams()
-    const [category, setCategory] = useState([]);
+    const { category, addCategory, getCategories, setCategory } = useContext(CategoryContext)
 
     useEffect(() => {
         getCategories().then((data) => setCategory(data))
