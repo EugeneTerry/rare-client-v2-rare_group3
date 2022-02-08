@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider.js";
 import { CommentContext } from "../comments/CommentProvider";
+import { MyReactions } from "../reactions/PostReaction"
 import "./Post.css";
 
 export const PostDetail = () => {
@@ -48,6 +49,9 @@ export const PostDetail = () => {
             <div className="post_content">{post.content}</div>
             <div>
               <h2 style={{fontSize: "16px"}}>Comments</h2>
+              <div className="postReactions">
+                <MyReactions />
+              </div>
               <ul style={{background: "lightGray"}}>
                 {post.comments?.map((comment) => {
                     return (
