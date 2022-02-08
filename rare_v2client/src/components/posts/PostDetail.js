@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider.js";
-import { CommentContext } from "../comments/CommentProvider";
+import { CommentContext } from "../comments/CommentProvider"
+import { CommentBox } from "../comments/CommentBox"
 import { MyReactions } from "../reactions/PostReaction"
 import "./Post.css";
 
@@ -71,6 +72,9 @@ export const PostDetail = () => {
                     );
                 })}
               </ul>
+              <div className="commentBox">
+                <CommentBox />
+              </div>
             </div>
           </section>
     </article>

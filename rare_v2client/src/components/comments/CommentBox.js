@@ -5,15 +5,16 @@ import { PostContext } from "../posts/PostProvider"
 
 export const CommentBox = () => {
     const history = useHistory()
-    const { getComments, createNewComment, getCommentById, editComment } = useContext(CommentContext)
+    const { comments, getComments, createNewComment, getCommentById, editComment } = useContext(CommentContext)
     const { getPosts } = useContext(PostContext)
     const { commentId } = useParams()
     const updateComment = commentId ? true : false
     const [isLoading, setIsLoading] = useState(true)
     const rareuser = parseInt(localStorage.getItem("rare_user_id"))
+    const postId = parseInt(comments.post)
 
     const [comment, setComment] = useState({
-        post: 1,
+        post: postId,
         author: rareuser,
         content: "",
         created_on: Date.now()
@@ -70,7 +71,7 @@ export const CommentBox = () => {
                 e.preventDefault();
                 handleSaveComment()
             }}>
-                {commentId ? <>Add</> : <>Update</>}
+                {commentId ? <>Update</> : <>Add</>}
             </button>
         </form>
     )
