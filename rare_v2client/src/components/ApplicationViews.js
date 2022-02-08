@@ -58,14 +58,12 @@ export const ApplicationViews = () => {
                   <PostForm />
                 </Route>
 
-
                 <Route path="/posts/edit/:postId(\d+)">
                   <PostForm />
                 </Route>
 
                 <Route exact path="/posts">
                   <PostList />
-                  <CommentList />
                 </Route>
 
                 <Route path="/myposts">
