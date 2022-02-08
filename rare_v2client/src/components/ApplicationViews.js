@@ -1,5 +1,8 @@
 import React from "react";
 import { Route, Router } from "react-router-dom";
+import { SubscriptionProvider } from "./Subscriptions/SubscriptionProvider";
+import { SubscriptionList } from "./Subscriptions/SubsciptionList"
+import { CategoryProvider } from "./categories/CategoryProvider";
 import { CategoryList } from "./categories/CategoryList";
 import { CategoryCreate } from "./categories/CategoryCreate";
 import { CategoryForm } from "./categories/CategoryForm";
@@ -16,20 +19,18 @@ import { RareUserList } from "./rareusers/RareUserList";
 import { RareUserProvider } from "./rareusers/RareuserProvider";
 import { ReactionProvider } from "./reactions/ReactionProvider";
 import { MyReactions } from "./reactions/PostReaction";
-import { PostReactions } from "./reactions/PostReaction";
 
 export const ApplicationViews = () => {
-  return (
-    <>
-      <main
-        style={{
-          margin: "5rem 2rem",
-          lineHeight: "1.75rem",
-        }}
-      >
-        <Route exact path="/categories">
+  return <>
+    <main style={{
+      margin: "5rem 2rem",
+      lineHeight: "1.75rem"
+    }}>
+      <CategoryProvider>
+        <Route exact path='/categories'>
           <CategoryList />
         </Route>
+
 
         <Route path="/categories/create">
           <CategoryCreate />
@@ -90,8 +91,14 @@ export const ApplicationViews = () => {
           <Route path="/tags/edit/:tagId(\d+)">
             <TagForm />
           </Route>
+          <SubscriptionProvider>
+          <Route exact path="/subscriptions">
+            <SubscriptionList />
+          </Route>
+          </SubscriptionProvider>
         </TagProvider>
-      </main>
-    </>
-  );
+      </CategoryProvider>
+    </main>
+  </>
 };
+
