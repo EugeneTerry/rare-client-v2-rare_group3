@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider.js";
 import { CommentContext } from "../comments/CommentProvider";
-import { CommentBox } from "../comments/CommentBox"
 import "./Post.css";
 
 export const PostDetail = () => {
@@ -51,29 +50,25 @@ export const PostDetail = () => {
             <div>
               <h2 style={{fontSize: "16px"}}>Comments</h2>
               <ul style={{background: "lightGray"}}>
-                {posts.map((p) => {
-                  if (p.comments.post === post.id) {
+                {comments.map((c) => {
+                  if (c.post.id === post.id) {
                     return (
                       <div
                         className="comments"
-                        key={p.post}
-                        id={`comments--${p.post}`}
+                        key={c.post}
+                        id={`comments--${c.post}`}
                       >
-                        <div className="comment_author" value={p.author}>
-                          <b>{p.comments.author}</b>
+                        <div className="comment_author" value={c.author}>
+                          <b>{c.author.name}</b>
                         </div>
-                        <div className="comment_content" style={{fontSize: "14px"}}>{p.content}</div>
-                        <button onClick={handleDelete(p.id)} hidden={p.author === rareuser_id ? "" : "hidden"}>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png"/></button>
-                        <div className="comment_created_on" style={{fontSize: "8px"}}>{p.created_on}</div>
+                        <div className="comment_content" style={{fontSize: "14px"}}>{c.content}</div>
+                        <button onClick={handleDelete(c.id)} hidden={c.author === rareuser_id ? "" : "hidden"}>Delete</button>
+                        <div className="comment_created_on" style={{fontSize: "8px"}}>{c.created_on}</div>
                       </div>
                     );
                   }
                 })}
               </ul>
-            <div className="commentBox">
-                <CommentBox />
-            </div>
             </div>
           </section>
     </article>
