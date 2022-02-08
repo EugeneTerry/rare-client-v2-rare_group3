@@ -5,7 +5,7 @@ export const RareUserProvider = (props) =>{
   const [currentUser, setCurrentUser] = useState({});
 
   const getCurrentUser = () => {
-    return fetch("http://localhost:8000/profile", {
+    return fetch("http://localhost:8000/rareusers/me", {
       headers: {
         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
