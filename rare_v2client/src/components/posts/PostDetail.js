@@ -7,7 +7,7 @@ import "./Post.css";
 export const PostDetail = () => {
   const history = useHistory();
   const [post, setPost] = useState([]);
-  const { posts, getPosts, getPostById, deletePost } = useContext(PostContext);
+  const { getPostById, deletePost } = useContext(PostContext);
   const { comments, getComments, deleteComment } = useContext(CommentContext);
   const rareuser_id = parseInt(localStorage.getItem("rare_user_id"));
   const { postId } = useParams()
@@ -16,8 +16,7 @@ export const PostDetail = () => {
   useEffect(() => {
       getPostById(postId)
         .then(setPost)
-        getComments()
-  })
+}, [])
 
   const handleDelete = id => () => {
     deleteComment(id)
@@ -32,7 +31,7 @@ export const PostDetail = () => {
       <button onClick={() => history.push("/posts/create")}>Create Post</button>
 
       <header className="post_header">
-        <h2>Posts</h2>
+        <h2>Post</h2>
       </header>
           <section className="post_detail">
             <Link className="post_user" to={`/rareusers/$`}></Link>
@@ -50,23 +49,22 @@ export const PostDetail = () => {
             <div>
               <h2 style={{fontSize: "16px"}}>Comments</h2>
               <ul style={{background: "lightGray"}}>
-                {comments.map((c) => {
-                  if (c.post.id === post.id) {
+                {post.comments?.map((comment) => {
                     return (
                       <div
                         className="comments"
-                        key={c.post}
-                        id={`comments--${c.post}`}
+                        key={comment.id}
+                        id={`comments--${comment.id}`}
                       >
-                        <div className="comment_author" value={c.author}>
-                          <b>{c.author.name}</b>
+                        <div className="comment_author">
+                          <b>{comment.author.first_name} {comment.author.last_name}</b>
                         </div>
-                        <div className="comment_content" style={{fontSize: "14px"}}>{c.content}</div>
-                        <button onClick={handleDelete(c.id)} hidden={c.author === rareuser_id ? "" : "hidden"}>Delete</button>
-                        <div className="comment_created_on" style={{fontSize: "8px"}}>{c.created_on}</div>
+                        <div className="comment_content" style={{fontSize: "14px"}}>{comment.content}</div>
+                        <button onClick={handleDelete(comment.id)} hidden={comment.author.id === rareuser_id ? "" : "hidden"}>
+                        <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png"/></button>
+                        <div className="comment_created_on" style={{fontSize: "8px"}}>{comment.created_on}</div>
                       </div>
                     );
-                  }
                 })}
               </ul>
             </div>
