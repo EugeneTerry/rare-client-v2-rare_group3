@@ -5,6 +5,7 @@ import { CommentContext } from "../comments/CommentProvider"
 import { CommentBox } from "../comments/CommentBox"
 import { MyReactions } from "../reactions/PostReaction"
 import "./Post.css";
+import moment from "moment";
 
 export const PostDetail = () => {
   const history = useHistory();
@@ -43,9 +44,9 @@ export const PostDetail = () => {
           <section className="post_detail">
             <Link className="post_user" to={`/rareusers/$`}></Link>
             <div className="post_title">
-              <h4>{post.title}</h4>
+              <h4>{(post.title)}</h4>
             </div>
-            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{post.publication_date}</div>
+            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{moment(post.publication_date).format("MMMM DD YYYY, h:mm a")}</div>
             <img
               className="post_image"
               src={post.image_url}
@@ -71,7 +72,7 @@ export const PostDetail = () => {
                           <b>{comment.author.first_name} {comment.author.last_name}</b>
                         </div>
                         <div className="comment_content" style={{fontSize: "14px"}}>{comment.content}</div>
-                        <div className="comment_created_on" style={{fontSize: "8px"}}>{comment.created_on}</div>
+                        <div className="comment_created_on" style={{fontSize: "8px"}}>{moment(comment.created_on).format("MMMM DD YYYY, h:mm a")}</div>
                         <button onClick={handleDelete(comment.id)} hidden={comment.author.id === rareuser_id ? "" : "hidden"}>
                         remove</button>
                       </div>
