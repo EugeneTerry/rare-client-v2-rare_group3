@@ -3,7 +3,7 @@ import { Link, useHistory} from "react-router-dom"
 import "./Auth.css"
 import { RareUserContext } from "../rareusers/RareuserProvider"
 
-export const Register = () => {
+export const Register = (props) => {
     const firstName = useRef()
     const lastName = useRef()
     const email = useRef()
