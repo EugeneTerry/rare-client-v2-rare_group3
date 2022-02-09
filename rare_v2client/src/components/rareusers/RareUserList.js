@@ -33,7 +33,7 @@ export const RareUserList = () => {
             <b>Email:</b> {""} {currentUser.user?.email} {""}{currentUser.user?.last_name}
           </ul>
           <ul>
-            <b>Joined On:</b> {moment.utc(currentUser.created_on).format("MMMM DD YYYY")}
+            <b>Joined On:</b> {moment(currentUser.created_on).format("MMMM DD YYYY")}
           </ul>
           </div>
         </div>
