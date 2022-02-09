@@ -4,6 +4,7 @@ export const CommentContext = createContext()
 
 export const CommentProvider = (props) => {
     const [comments, setComments] = useState([])
+    const [comment, setComment] = useState({})
 
     const getComments = () => {
     return fetch("http://localhost:8000/comments", {
@@ -16,8 +17,13 @@ export const CommentProvider = (props) => {
 }
 
     const getCommentById = (id) => {
-    return fetch(`http://localhost:8000/comments/${id}`)
-        .then(res => res.json())
+    return fetch(`http://localhost:8000/comments/${id}`, {
+        headers: {
+            Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+        }
+    })
+    .then(res => res.json())
+    .then(setComment)
 }
 
     const createNewComment = comment => {
@@ -44,7 +50,10 @@ export const CommentProvider = (props) => {
 
     const deleteComment = (comment_id) => {
     return fetch(`http://localhost:8000/comments/${comment_id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+        }
     })
         .then(getComments)
 }

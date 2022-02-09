@@ -10,15 +10,14 @@ export const PostDetail = () => {
   const history = useHistory();
   const [post, setPost] = useState([]);
   const { getPostById, deletePost } = useContext(PostContext);
-  const { comments, getComments, deleteComment } = useContext(CommentContext);
-  const rareuser_id = parseInt(localStorage.getItem("rare_user_id"));
+  const { deleteComment } = useContext(CommentContext);
+  const rareuser_id = parseInt(localStorage.getItem("rareuser_pk"));
   const { postId } = useParams()
 
   const reloadComments = () => {
       window.location.reload()
 
   }
-
 
   useEffect(() => {
       getPostById(postId)
@@ -28,8 +27,9 @@ export const PostDetail = () => {
   const handleDelete = id => () => {
     deleteComment(id)
       .then(() => {
-        history.push("/")
+        history.push(`/posts/${postId}`)
       })
+      window.location.reload()
   }
 
 
@@ -60,6 +60,7 @@ export const PostDetail = () => {
               </div>
               <ul style={{background: "lightGray"}}>
                 {post.comments?.map((comment) => {
+
                     return (
                       <div
                         className="comments"
@@ -70,9 +71,9 @@ export const PostDetail = () => {
                           <b>{comment.author.first_name} {comment.author.last_name}</b>
                         </div>
                         <div className="comment_content" style={{fontSize: "14px"}}>{comment.content}</div>
-                        <button onClick={handleDelete(comment.id)} hidden={comment.author.id === rareuser_id ? "" : "hidden"}>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png"/></button>
                         <div className="comment_created_on" style={{fontSize: "8px"}}>{comment.created_on}</div>
+                        <button onClick={handleDelete(comment.id)} hidden={comment.author.id === rareuser_id ? "" : "hidden"}>
+                        remove</button>
                       </div>
                     );
                 })}

@@ -39,7 +39,7 @@ export const PostForm = () => {
         editPost({
           id: post.id,
           title: post.title,
-          category_id: post.category_id,
+          category: post.category_id,
           publication_date: post.publication_date,
           image_url: post.image_url,
           content: post.content,
@@ -51,7 +51,7 @@ export const PostForm = () => {
       } else {
         addPost({
           title: post.title,
-          category_id: category_id,
+          category: category_id,
           publication_date: new Date(),
           image_url: post.image_url,
           content: post.content,
@@ -101,15 +101,15 @@ export const PostForm = () => {
         <div className="form_group">
           <label htmlFor="category_id"> Category: </label>
           <select label="category_id" title="category_id" className="form-control"
-            value={post.category_id}
+            value={post.category}
             onChange={handleInputChange}>
-              <option value="0"></option>
               {
-                categories.map(event => (
-                  <option key={event.id} value={event.id}>
-                    {event.label}
+                post.category?.map(c => {
+                    return(
+                  <option key={c.id} value={c.id}>
+                    {c.label}
                   </option>
-                ))
+                )})
               }
             </select>
         </div>
