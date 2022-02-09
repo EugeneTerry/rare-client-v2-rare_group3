@@ -51,7 +51,6 @@ export const ApplicationViews = () => {
 
             <Route path='/posts/:postId(\d+)'>
                 <PostDetail />
-                <MyReactions />
             </Route>
 
                 <Route exact path="/posts/create">

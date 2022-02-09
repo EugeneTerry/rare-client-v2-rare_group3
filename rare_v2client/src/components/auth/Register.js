@@ -36,8 +36,8 @@ export const Register = () => {
                 .then(res => {
                     if ("valid" in res && res.valid) {
                         localStorage.setItem("rare_user_id", res.token)
-                        getCurrentUser()
-                        history.push("/login")
+                        localStorage.setItem("rareuser_pk", res.rareuser_pk )
+                        props.history.push("/")
                     }
                 })
         } else {
