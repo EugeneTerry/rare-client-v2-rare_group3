@@ -36,7 +36,7 @@ export const CategoryCreate = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="label">Category: </label>
-                    <input type="text" id="label" ref={label} required autoFocus className="form-control" placeholder="Category" onChange={handleControlledInputChange} defaultValue={category.label} />
+                    <input type="text" id="label" ref={category.label} required autoFocus className="form-control" placeholder="Category" onChange={handleControlledInputChange} DefaultValue={category.label} />
                 </div>
             </fieldset>
             <button type="submit"
