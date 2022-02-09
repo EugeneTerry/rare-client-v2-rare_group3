@@ -1,20 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider.js";
-import { CommentContext } from "../comments/CommentProvider";
 import "./Post.css";
 
 export const PostList = (props) => {
   const history = useHistory();
-  const [post, setPost] = useState([]);
   const { posts, getPosts } = useContext(PostContext);
-  const [comment, setComment] = useState([]);
-  const { comments, getComments, deleteComment } = useContext(CommentContext);
-  const rareuser_id = parseInt(localStorage.getItem("rare_user_id"));
-  const { postId } = useParams()
 
   useEffect(() => {
-    getPosts().then((postsData) => setPost(postsData));
+    getPosts()
   }, []);
 
   return (

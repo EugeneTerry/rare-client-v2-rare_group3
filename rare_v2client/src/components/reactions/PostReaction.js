@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ReactionContext } from "./ReactionProvider";
 import { PostContext } from "../posts/PostProvider";
+import { Link } from "react-router-dom"
+import "./reaction.css"
 
 // This is getting the reactions associated with a post and showing the reactions on the post detail page under the post
 
