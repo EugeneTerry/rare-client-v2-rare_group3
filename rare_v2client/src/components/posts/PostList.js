@@ -21,7 +21,9 @@ export const PostList = (props) => {
       {posts.map((p) => {
         return (
           <section key={p.id} id={`post--${p.id}`}>
-            <Link className="post_user" to={`/rareusers/$`}></Link>
+            <Link className="post_user" to={`/profiles/$`}>
+                {p.user.user.first_name} {p.user.user.last_name}
+            </Link>
             <div className="post_title">
               <Link to={`/posts/${p.id}`}>
               {p.title}

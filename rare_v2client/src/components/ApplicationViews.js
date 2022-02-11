@@ -6,6 +6,8 @@ import { CategoryProvider } from "./categories/CategoryProvider";
 import { CategoryList } from "./categories/CategoryList";
 import { CategoryCreate } from "./categories/CategoryCreate";
 import { CategoryForm } from "./categories/CategoryForm";
+import { CommentBox } from "./comments/CommentBox"
+import { CommentList } from "./comments/CommentList"
 import { CommentProvider } from "./comments/CommentProvider";
 import { PostList } from "./posts/PostList";
 import { PostDetail } from "./posts/PostDetail";
@@ -19,6 +21,7 @@ import { RareUserList } from "./rareusers/RareUserList";
 import { RareUserProvider } from "./rareusers/RareuserProvider";
 import { ReactionProvider } from "./reactions/ReactionProvider";
 import { MyReactions } from "./reactions/PostReaction";
+import { AdminPendingPost } from "./admin/PendingPost"
 
 export const ApplicationViews = () => {
   return <>
@@ -48,7 +51,9 @@ export const ApplicationViews = () => {
                   <PostList />
                 </Route>
 
-
+            <Route path="/admin">
+                <AdminPendingPost />
+            </Route>
             <Route path='/posts/:postId(\d+)'>
                 <PostDetail />
             </Route>
@@ -64,6 +69,13 @@ export const ApplicationViews = () => {
 
             <Route exact path='/posts'>
                 <PostList />
+            </Route>
+
+            <Route exact path="/posts/edit/:commentId(\d+)">
+                <CommentBox />
+            </Route>
+            <Route path="/comments">
+                <CommentList />
             </Route>
 
                 <Route path="/myposts">

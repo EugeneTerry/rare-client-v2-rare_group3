@@ -48,9 +48,10 @@ export const CommentBox = ({reloadComments}) => {
                 id: comment.id,
                 post: post_id,
                 author: rareuser,
-                content: comment.content,
+                content: "",
                 created_on: Date.now()
             }).then(() => history.push(`/posts/${postId}`))
+                reloadComments()
         } else {
             const newComment = {
                 post: postId,

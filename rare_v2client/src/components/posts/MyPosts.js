@@ -1,38 +1,37 @@
 import React, { useEffect, useState, useContext } from "react";
-import { PostContext } from "./PostProvider";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { PostContext } from "./PostProvider.js";
+import "./Post.css";
 
-export const MyPosts = () => {
-    const [post, setPost] = useState([])
-    const [myPosts, setMyPosts] = useState([])
-    const { posts, getPosts } = useContext(PostContext)
+export const MyPosts = (props) => {
+  const history = useHistory();
+  const { posts, getPosts } = useContext(PostContext);
+  const userId = parseInt(localStorage.getItem("rareuser_pk"))
 
-    const userId = parseInt(localStorage.getItem("rare_user_id"))
+  useEffect(() => {
+    getPosts()
+  }, []);
 
-    useEffect(() => {
-        getPosts()
-          .then(setPost)
-  }, [])
+  return (
+    <article className="post_list">
+      <header className="post_header">
+        <h2>My Feed</h2>
+      </header>
+      {posts.map((p) => {
+          if (p.user === userId) {
+        return (
+          <section key={p.id} id={`post--${p.id}`}>
 
-    // useEffect(() => {
-    //     const myPosts = posts.filter(post => post.user_id === parseInt(userId))
-    //     setMyPosts(myPosts)
-    // }, [posts, userId])
-
-    return (
-        <div className='myPosts'>
-            {
-            posts.map(p => {
-                if (p.userId === userId) {
-                return (
-                    <div className='myPosts_post'>
-                        <h3>{p.title}</h3>
-                        <img src={p.image_url} alt='post_image'/>
-                        <p>Posted on {p.publication_date}</p>
-                        <p>Posted by user {p.user.first_name} {p.user.last_name}</p>
-                    </div>
-                )
-            }})
-            }
-        </div>
-    )
-}
+            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{p.publication_date}</div>
+            <Link to={`/posts/${p.id}`}>
+            <img src={p.image_url}
+            width="500px"
+            height="350px"
+            />
+            </Link>
+          </section>
+        )}
+      })}
+    </article>
+  );
+};
