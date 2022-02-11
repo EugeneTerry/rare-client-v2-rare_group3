@@ -13,6 +13,14 @@ export const MyReactions = () => {
 
     const userId = localStorage.getItem('rare_user_id')
 
+     // State to store count value
+    const [count, setCount] = useState(0);
+     // Function to increment count by 1
+    const incrementCount = () => {
+    // Update state with incremented value
+    setCount(count + 1);
+    };
+
     useEffect(() => {
         getReactions().then((data) => setReactions(data))
     }, [])
@@ -23,8 +31,8 @@ export const MyReactions = () => {
             reactions.map(reaction => {
                 return (
                     <ul>
-                    <button className='myReactions_post'>
-                        {reaction.image_url} <div>1</div>
+                    <button className='myReactions_post'onClick={incrementCount}>
+                        {reaction.image_url} <div>{count}</div>
                     </button>
                     </ul>
                 )
