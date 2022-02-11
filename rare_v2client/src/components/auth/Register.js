@@ -1,15 +1,17 @@
-import React, { useRef } from "react"
-import { Link} from "react-router-dom"
+import React, { useContext, useRef } from "react"
+import { Link, useHistory} from "react-router-dom"
 import "./Auth.css"
+import { RareUserContext } from "../rareusers/RareuserProvider"
 
 export const Register = (props) => {
     const firstName = useRef()
     const lastName = useRef()
     const email = useRef()
-    const bio = useRef()
     const password = useRef()
     const verifyPassword = useRef()
     const passwordDialog = useRef()
+    const getCurrentUser = useContext(RareUserContext)
+    const history = useHistory()
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -34,6 +36,7 @@ export const Register = (props) => {
                 .then(res => {
                     if ("valid" in res && res.valid) {
                         localStorage.setItem("rare_user_id", res.token)
+                        localStorage.setItem("rareuser_pk", res.rareuser_pk )
                         props.history.push("/")
                     }
                 })

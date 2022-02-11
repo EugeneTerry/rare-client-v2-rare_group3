@@ -27,6 +27,7 @@ export const Login = () => {
             .then(res => {
                 if ("valid" in res && res.valid) {
                     localStorage.setItem("rare_user_id", res.token )
+                    localStorage.setItem("rareuser_pk", res.rareuser_pk )
                     history.push("/")
                 }
                 else {
@@ -43,7 +44,7 @@ export const Login = () => {
             </dialog>
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>Rare Publishing</h1>
+                    <h1>I Post You Post</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email address </label>

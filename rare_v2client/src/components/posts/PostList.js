@@ -1,20 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider.js";
-import { CommentContext } from "../comments/CommentProvider";
 import "./Post.css";
+import moment from "moment";
 
 export const PostList = (props) => {
   const history = useHistory();
-  const [post, setPost] = useState([]);
   const { posts, getPosts } = useContext(PostContext);
-  const [comment, setComment] = useState([]);
-  const { comments, getComments, deleteComment } = useContext(CommentContext);
-  const rareuser_id = parseInt(localStorage.getItem("rare_user_id"));
-  const { postId } = useParams()
 
   useEffect(() => {
-    getPosts().then((postsData) => setPost(postsData));
+    getPosts()
   }, []);
 
   return (
@@ -33,7 +28,7 @@ export const PostList = (props) => {
               {p.title}
               </Link>
             </div>
-            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{p.publication_date}</div>
+            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{moment(p.publication_date).format("MMMM DD YYYY, h:mm a")}</div>
             <Link to={`/posts/${p.id}`}>
             <img src={p.image_url}
             width="500px"
