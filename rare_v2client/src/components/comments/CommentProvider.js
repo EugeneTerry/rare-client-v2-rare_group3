@@ -60,7 +60,7 @@ export const CommentProvider = (props) => {
 
     return (
         <CommentContext.Provider value={{
-            comments, getComments, getCommentById, createNewComment, editComment, deleteComment }}>
+            comment, comments, getComments, getCommentById, createNewComment, editComment, deleteComment }}>
             {props.children}
             </CommentContext.Provider>
     )

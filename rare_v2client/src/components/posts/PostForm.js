@@ -4,47 +4,66 @@ import { PostContext } from "./PostProvider";
 import { CategoryContext } from "../categories/CategoryProvider"
 
 export const PostForm = () => {
-  const [categories, setCategories] = useState([])
-  const { addPost, editPost, getPostById } = useContext(PostContext)
-  const { getCategories } = useContext(CategoryContext)
+  const [category, setCategories] = useState([])
+  const { posts, addPost, updatePost, getPostById } = useContext(PostContext)
+  const { categories, getCategories } = useContext(CategoryContext)
   const {postId} = useParams()
-  const [post, setPost] = useState({})
   const history = useHistory()
-
   const editMode = postId ? true : false
 
+  const [post, setPost] = useState({
+    title: "",
+    category: 0,
+    publication_date: Date.now(),
+    image_url: "",
+    content: "",
+    approved: 1
+  })
+
+	useEffect(() => {
+		getCategories().then(() => {
+			if(postId) {
+				getPostById(parseInt(postId))
+				.then(post => {
+					setPost(post)
+				})
+			}
+		})
+	}, [])
+
   const handleInputChange = (event) => {
-    const newPost = Object.assign({}, post)
-    newPost[event.target.title] = event.target.value
-    setPost(newPost)
-  }
+  //   const newPost = Object.assign({}, post)
+  //   newPost[event.target.title] = event.target.value
+  //   setPost(newPost)
+  // }
 
-  useEffect(() => {
-    if (editMode) {
-      getPostById(postId).then((res) => {
-        setPost(res)
-        console.warn('postId',postId)
-      })
-    }
-    getCategories().then(categoriesData => setCategories(categoriesData))
-  }, [])
+  // useEffect(() => {
+  //   if (editMode) {
+  //     getPostById(postId).then((res) => {
+  //       setPost(res)
+  //       console.warn('postId',postId)
+  //     })
+  //   }
+  //   getCategories().then(categoriesData => setCategories(categoriesData))
+  // }, [])
 
+  const newPost = { ...post }
+  newPost[event.target.id] = event.target.value;
+	setPost(newPost)
+	}
   const createNewPost = () => {
-    const category_id = parseInt(post.category_id)
+    const category_id = parseInt(post.category)
 
-    if (category_id === 0) {
-      window.alert("Choose Category Please")
-    } else {
       if (editMode) {
-        editPost({
+        updatePost({
           id: post.id,
           title: post.title,
-          category: post.category_id,
+          category: category_id,
           publication_date: post.publication_date,
           image_url: post.image_url,
           content: post.content,
           approved: post.approved,
-          user_id: parseInt(localStorage.getItem("rare_user_id"))
+          user: parseInt(localStorage.getItem("rareuser_pk"))
         })
           .then (() => history.push("/posts"))
 
@@ -56,12 +75,12 @@ export const PostForm = () => {
           image_url: post.image_url,
           content: post.content,
           approved: false,
-          user_id: parseInt(localStorage.getItem("rare_user_id"))
+          user: parseInt(localStorage.getItem("rareuser_pk"))
 
         })
-          .then (() => history.push("/posts"))
+          .then (() => history.push("/myposts"))
       }
-    }
+
   }
 
   return (
@@ -70,9 +89,9 @@ export const PostForm = () => {
       <fieldset>
         <div className="form_group">
           <label htmlFor="title"> Post Title: </label>
-          <input type="text" title="title" required autoFocus className="form-control"
+          <input type="text" id="title" name="title" required autoFocus className="form-control"
           placeholder="Post title"
-          defaultValue={post.title}
+          value={post.title}
           onChange={handleInputChange}
           />
         </div>
@@ -80,9 +99,9 @@ export const PostForm = () => {
       <fieldset>
         <div className="form_group">
           <label htmlFor="image_url"> Image URL: </label>
-          <input type="text" title="image_url" required autoFocus className="form-control"
+          <input type="text" id="image_url" name="image_url" required autoFocus className="form-control"
           placeholder="Image Url"
-          defaultValue={post.image_url}
+          value={post.image_url}
           onChange={handleInputChange}
           />
         </div>
@@ -90,27 +109,25 @@ export const PostForm = () => {
       <fieldset>
         <div className="form_group">
           <label htmlFor="content"> Content: </label>
-          <input type="text" title="content" required autoFocus className="form-control"
+          <input type="text" name="content" id="content" required autoFocus className="form-control"
           placeholder="Post content"
-          defaultValue={post.content}
+          value={post.content}
           onChange={handleInputChange}
           />
         </div>
       </fieldset>
       <fieldset>
         <div className="form_group">
-          <label htmlFor="category_id"> Category: </label>
-          <select label="category_id" title="category_id" className="form-control"
-            value={post.category}
+          <label htmlFor="category"> Category: </label>
+          <select name="category" require autoFocus className="form-control" id="category" placeholder="pick"
+            value={categories.id}
             onChange={handleInputChange}>
-              {
-                post.category?.map(c => {
-                    return(
-                  <option key={c.id} value={c.id}>
+						{categories.map((c) => {
+							return (
+                  <option id="category" name="category" require autoFocus onChange={handleInputChange} key={c.id} value={c.id}>
                     {c.label}
                   </option>
-                )})
-              }
+						)})}
             </select>
         </div>
       </fieldset>
@@ -120,7 +137,7 @@ export const PostForm = () => {
           createNewPost()
         }}
         className="bt btn-primary">
-        {editMode ? "Save Edit" : "Create Post"}
+        {editMode ? "Save Changes" : "Create Post"}
       </button>
     </form>
   )
