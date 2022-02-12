@@ -9,6 +9,7 @@ export const CategoryCreate = () => {
     const { addCategory, getCategories } = useContext(CategoryContext)
 
     const [category, setCategory]=useState({})
+    
     useEffect(() => {
         getCategories()
     }, [])
