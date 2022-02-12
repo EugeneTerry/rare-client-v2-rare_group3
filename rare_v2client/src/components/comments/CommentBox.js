@@ -73,7 +73,7 @@ export const CommentBox = ({reloadComments}) => {
                 e.preventDefault();
                 handleSaveComment()
             }}>
-                {commentId ? <>Update</> : <>Ad</>}
+                {commentId ? <>Update</> : <>Add</>}
             </button>
         </form>
     )
