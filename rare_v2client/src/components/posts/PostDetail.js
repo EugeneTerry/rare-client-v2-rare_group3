@@ -33,54 +33,6 @@ export const PostDetail = () => {
 
   return (
     <article className="post_list">
-      <button onClick={() => history.push("/posts/create")}>Create Post</button>
-
-      <header className="post_header">
-        <h2>Post</h2>
-      </header>
-          <section className="post_detail">
-            <Link className="post_user" to={`/rareusers/$`}></Link>
-            <div className="post_title">
-              <h4>{(post.title)}</h4>
-            </div>
-            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{moment(post.publication_date).format("MMMM DD YYYY, h:mm a")}</div>
-            <img
-              className="post_image"
-              src={post.image_url}
-              width="500px"
-              height="350px"
-            />
-            <div className="post_content">{post.content}</div>
-            <div>
-              <h2 style={{fontSize: "16px"}}>Comments</h2>
-              <div className="postReactions">
-                <MyReactions postReactions = {post.post_reactions} />
-              </div>
-              <ul style={{background: "lightGray"}}>
-                {post.comments?.map((comment) => {
-
-                    return (
-                      <div
-                        className="comments"
-                        key={comment.id}
-                        id={`comments--${comment.id}`}
-                      >
-                        <div className="comment_author">
-                          <b>{comment.author.first_name} {comment.author.last_name}</b>
-                        </div>
-                        <div className="comment_content" style={{fontSize: "14px"}}>{comment.content}</div>
-                        <div className="comment_created_on" style={{fontSize: "8px"}}>{moment(comment.created_on).format("MMMM DD YYYY, h:mm a")}</div>
-                        <button onClick={handleDelete(comment.id)} hidden={comment.author.id === rareuser_id ? "" : "hidden"}>
-                        remove</button>
-                      </div>
-                    );
-                })}
-              </ul>
-              <div className="commentBox">
-                <CommentBox reloadComments={reloadComments}/>
-              </div>
-            </div>
-          </section>
       <Link className="post_header" style={{ textDecoration: "none" }} to={`/`}>
         <h2>&#128281;</h2>
       </Link>
@@ -118,7 +70,7 @@ export const PostDetail = () => {
         <div>
           <h2 style={{ fontSize: "16px" }}>Comments</h2>
           <div className="postReactions">
-            <MyReactions />
+					<MyReactions postReactions = {post.post_reactions} />
           </div>
           <ul style={{ background: "lightGray" }}>
             {post.comments?.map((comment) => {
@@ -163,7 +115,6 @@ export const PostDetail = () => {
           </div>
         </div>
       </section>
-
     </article>
   );
 };
