@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { CommentContext } from "./CommentProvider"
 import { PostContext } from "../posts/PostProvider"
+import "./CommentBox.css"
 
 export const CommentBox = ({reloadComments}) => {
     const history = useHistory()
@@ -11,12 +12,11 @@ export const CommentBox = ({reloadComments}) => {
     const { postId } = useParams()
     const updateComment = commentId ? true : false
     const [isLoading, setIsLoading] = useState(true)
-    const rareuser = parseInt(localStorage.getItem("rare_user_id"))
+    const rareuser = parseInt(localStorage.getItem("rareuser_pk"))
     const post_id = parseInt(comments.post)
 
     const [comment, setComment] = useState({
-        post: post_id,
-        author: rareuser,
+        post: 0,
         content: "",
         created_on: Date.now()
     })
@@ -48,10 +48,10 @@ export const CommentBox = ({reloadComments}) => {
                 id: comment.id,
                 post: post_id,
                 author: rareuser,
-                content: "",
+                content: comment.content,
                 created_on: Date.now()
-            }).then(() => history.push(`/posts/${postId}`))
-                reloadComments()
+            }).then(() => history.push(`/comments/edit/${commentId}`))
+                window.location.reload()
         } else {
             const newComment = {
                 post: postId,
@@ -61,19 +61,19 @@ export const CommentBox = ({reloadComments}) => {
             }
             createNewComment(newComment)
             .then(() => {
-                reloadComments()
+                window.location.reload()
             })
         }
     }
 
     return (
         <form className="comments">
-            <input type="text" required autoFocus className="comment_content" id="content" placeholder="Write a comment..." onChange={handleControlInputChange} value={comment.content} />
-            <button className="saveComment" disabled={isLoading} onClick={(e) => {
+            <input type="text" required autoFocus className="commentBox" id="content" key="content" placeholder="Write a comment..." onChange={handleControlInputChange} value={comment.content}/>
+            <button className="saveComment" style={{fontSize:"10px"}} disabled={isLoading} onClick={(e) => {
                 e.preventDefault();
                 handleSaveComment()
             }}>
-                {commentId ? <>Update</> : <>Add</>}
+                {commentId ? <>Update</> : <>Ad</>}
             </button>
         </form>
     )

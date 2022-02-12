@@ -12,7 +12,7 @@ import { CommentProvider } from "./comments/CommentProvider";
 import { PostList } from "./posts/PostList";
 import { PostDetail } from "./posts/PostDetail";
 import { PostForm } from "./posts/PostForm";
-import { PostProvider } from "./posts/PostProvider.js";
+import { PostProvider } from "./posts/PostProvider";
 import { TagList } from "./tags/TagList";
 import { TagForm } from "./tags/TagForm";
 import { MyPosts } from "./posts/MyPosts";
@@ -71,7 +71,7 @@ export const ApplicationViews = () => {
                 <PostList />
             </Route>
 
-            <Route exact path="/posts/edit/:commentId(\d+)">
+            <Route exact path="/comments/edit/:commentId(\d+)">
                 <CommentBox />
             </Route>
             <Route path="/comments">

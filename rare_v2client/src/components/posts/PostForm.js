@@ -5,7 +5,7 @@ import { CategoryContext } from "../categories/CategoryProvider"
 
 export const PostForm = () => {
   const [category, setCategories] = useState([])
-  const { addPost, editPost, getPostById } = useContext(PostContext)
+  const { posts, addPost, updatePost, getPostById } = useContext(PostContext)
   const { categories, getCategories } = useContext(CategoryContext)
   const {postId} = useParams()
   const history = useHistory()
@@ -17,8 +17,7 @@ export const PostForm = () => {
     publication_date: Date.now(),
     image_url: "",
     content: "",
-    approved: true,
-    user: 0
+    approved: 1
   })
 
 	useEffect(() => {
@@ -56,14 +55,14 @@ export const PostForm = () => {
     const category_id = parseInt(post.category)
 
       if (editMode) {
-        editPost({
+        updatePost({
           id: post.id,
           title: post.title,
           category: category_id,
           publication_date: post.publication_date,
           image_url: post.image_url,
           content: post.content,
-          approved: true,
+          approved: post.approved,
           user: parseInt(localStorage.getItem("rareuser_pk"))
         })
           .then (() => history.push("/posts"))
@@ -90,9 +89,9 @@ export const PostForm = () => {
       <fieldset>
         <div className="form_group">
           <label htmlFor="title"> Post Title: </label>
-          <input type="text" title="title" required autoFocus className="form-control"
+          <input type="text" id="title" name="title" required autoFocus className="form-control"
           placeholder="Post title"
-          defaultValue={post.title}
+          value={post.title}
           onChange={handleInputChange}
           />
         </div>
@@ -100,9 +99,9 @@ export const PostForm = () => {
       <fieldset>
         <div className="form_group">
           <label htmlFor="image_url"> Image URL: </label>
-          <input type="text" title="image_url" required autoFocus className="form-control"
+          <input type="text" id="image_url" name="image_url" required autoFocus className="form-control"
           placeholder="Image Url"
-          defaultValue={post.image_url}
+          value={post.image_url}
           onChange={handleInputChange}
           />
         </div>
@@ -110,26 +109,25 @@ export const PostForm = () => {
       <fieldset>
         <div className="form_group">
           <label htmlFor="content"> Content: </label>
-          <input type="text" title="content" required autoFocus className="form-control"
+          <input type="text" name="content" id="content" required autoFocus className="form-control"
           placeholder="Post content"
-          defaultValue={post.content}
+          value={post.content}
           onChange={handleInputChange}
           />
         </div>
       </fieldset>
       <fieldset>
         <div className="form_group">
-          <label htmlFor="category_id"> Category: </label>
-          <select label="category_id" title="category_id" require autoFocus className="form-control" id="category" placeholder="pick"
-            defaultValue={post.category}
+          <label htmlFor="category"> Category: </label>
+          <select name="category" require autoFocus className="form-control" id="category" placeholder="pick"
+            value={categories.id}
             onChange={handleInputChange}>
-              {categories.map(c => {
-                    return(
-                  <option key={c} value={c}>
+						{categories.map((c) => {
+							return (
+                  <option id="category" name="category" require autoFocus onChange={handleInputChange} key={c.id} value={c.id}>
                     {c.label}
                   </option>
-                )})
-              }
+						)})}
             </select>
         </div>
       </fieldset>
@@ -139,7 +137,7 @@ export const PostForm = () => {
           createNewPost()
         }}
         className="bt btn-primary">
-        {editMode ? "Save Edit" : "Create Post"}
+        {editMode ? "Save Changes" : "Create Post"}
       </button>
     </form>
   )

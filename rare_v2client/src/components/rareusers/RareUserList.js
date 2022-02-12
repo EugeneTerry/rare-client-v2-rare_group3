@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { RareUserContext } from "./RareuserProvider";
-// import moment from "moment";
+import moment from "moment";
 import "../styles/rareuser.css";
 
 export const RareUserList = () => {
@@ -44,5 +44,6 @@ export const RareUserList = () => {
         </div>
       </div>
     </article>
+
   );
 };
