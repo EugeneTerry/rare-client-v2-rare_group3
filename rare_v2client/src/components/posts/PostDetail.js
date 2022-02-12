@@ -57,7 +57,7 @@ export const PostDetail = () => {
             <div>
               <h2 style={{fontSize: "16px"}}>Comments</h2>
               <div className="postReactions">
-                <MyReactions />
+                <MyReactions postReactions = {post.post_reactions} />
               </div>
               <ul style={{background: "lightGray"}}>
                 {post.comments?.map((comment) => {
