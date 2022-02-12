@@ -22,6 +22,7 @@ import { RareUserProvider } from "./rareusers/RareuserProvider";
 import { ReactionProvider } from "./reactions/ReactionProvider";
 import { MyReactions } from "./reactions/PostReaction";
 import { AdminPendingPost } from "./admin/PendingPost"
+import { ReactionForm } from "./reactions/ReactionForm";
 
 export const ApplicationViews = () => {
   return <>
@@ -88,6 +89,7 @@ export const ApplicationViews = () => {
 
                 <Route path="/reactions">
                   <MyReactions />
+                  <ReactionForm />
                 </Route>
               </ReactionProvider>
             </CommentProvider>
@@ -113,4 +115,3 @@ export const ApplicationViews = () => {
     </main>
   </>
 };
-

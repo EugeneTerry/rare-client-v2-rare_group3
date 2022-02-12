@@ -87,15 +87,6 @@ const handleSaveComment = () => {
                         </Link>
                         <div className="comment_content" style={{fontSize: "14px"}}>{c.content}</div>
                         <div className="comment_created_on" style={{fontSize: "8px"}}>{moment(c.created_on).format("MMMM DD YYYY, h:mm a")}</div>
-                        <button
-                  className="edit_comment"
-                  onClick={() => {
-                    history.push(`/comments/edit/${commentId}`);
-                  }}
-                  hidden={c.author.id === rareuser ? "" : "hidden"} style={{fontSize:"8px"}}
-                >
-                  Edit Comment
-                </button>
                         <button onClick={handleDelete(c.id)} hidden={c.author.id === rareuser ? "" : "hidden"} style={{fontSize:"8px"}}>
                         remove</button>
                       </div>

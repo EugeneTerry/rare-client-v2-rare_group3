@@ -34,11 +34,22 @@ export const ReactionProvider = (props) => {
             }
         })
         .then(res => res.json())
-    }
-
+    };
+    
+    const editReactions = (reaction) => {
+        return fetch(`http://localhost:8000/reactions/${reaction.id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+            },
+            body: JSON.stringify(reaction)
+        })
+            .then(getReactions)
+        }
 
     return(
-        <ReactionContext.Provider value={{ reactions, getReactions, addReaction, getReactionById }}>
+        <ReactionContext.Provider value={{ reactions, getReactions, addReaction, getReactionById, editReactions }}>
             {props.children}
         </ReactionContext.Provider>
     )

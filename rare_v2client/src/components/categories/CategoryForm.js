@@ -9,7 +9,7 @@ export const CategoryForm = () => {
     const [category, setCategories] = useState([])
     const [theCategory, setTheCategory] = useState({label: ''})
     const [newCategory, setNewCategory] = useState({})
-    const {categories,getCategories , editCategory} = useContext(CategoryContext)
+    const {categories, getCategories , editCategory} = useContext(CategoryContext)
     const { categoryId } = useParams()
 
     useEffect(() => {

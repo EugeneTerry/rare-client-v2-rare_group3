@@ -24,7 +24,7 @@ export const TagProvider = (props) => {
         },
         body:JSON.stringify(newTag)
     })
-        .then(res => res.json())
+        // .then(res => res.json())
         .then(getTags)
     };
 
