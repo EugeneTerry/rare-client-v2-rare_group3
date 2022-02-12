@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { ReactionContext } from "./ReactionProvider";
 import { PostContext } from "../posts/PostProvider";
 import { Link } from "react-router-dom"
@@ -28,6 +28,12 @@ export const MyReactions = ({postReactions = []}) => {
     // setCount(count + 1);
     // };
 
+    const incrementCount = (id) => {
+    // Update state with incremented value
+    setCount(count + 1)
+    };
+
+
     useEffect(() => {
         getReactions()
     }, [])
@@ -42,6 +48,7 @@ export const MyReactions = ({postReactions = []}) => {
                 
                 return (
                     <ul>
+
                     <button className='myReactions_post'onChange={handleInputChange} >
                         {reaction.image_url} <div>{reactionCount}</div>
                     </button>

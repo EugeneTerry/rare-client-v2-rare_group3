@@ -1,38 +1,64 @@
 import React, { useEffect, useState, useContext } from "react";
-import { PostContext } from "./PostProvider";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { PostContext } from "./PostProvider.js";
+import moment from "moment"
+import "./Post.css";
 
-export const MyPosts = () => {
-    const [post, setPost] = useState([])
-    const [myPosts, setMyPosts] = useState([])
-    const { posts, getPosts } = useContext(PostContext)
+export const MyPosts = (props) => {
+  const history = useHistory();
+  const { posts, getPosts, updatePost, deletePost } = useContext(PostContext);
+  const userId = parseInt(localStorage.getItem("rareuser_pk"))
 
-    const userId = parseInt(localStorage.getItem("rare_user_id"))
+  useEffect(() => {
+    getPosts()
+  }, []);
 
-    useEffect(() => {
-        getPosts()
-          .then(setPost)
-  }, [])
+  const handleRelease = id => () => {
+    deletePost(id)
+    .then(() => {
+      window.location.reload()
+    })
+  }
 
-    // useEffect(() => {
-    //     const myPosts = posts.filter(post => post.user_id === parseInt(userId))
-    //     setMyPosts(myPosts)
-    // }, [posts, userId])
-
-    return (
-        <div className='myPosts'>
-            {
-            posts.map(p => {
-                if (p.userId === userId) {
-                return (
-                    <div className='myPosts_post'>
-                        <h3>{p.title}</h3>
-                        <img src={p.image_url} alt='post_image'/>
-                        <p>Posted on {p.publication_date}</p>
-                        <p>Posted by user {p.user.first_name} {p.user.last_name}</p>
-                    </div>
-                )
-            }})
-            }
-        </div>
-    )
-}
+  return (
+    <article className="post_list">
+      <header className="post_header">
+        <h2>My Feed</h2>
+      </header>
+      {posts.map((p) => {
+          if (p.user.id === userId) {
+        return (
+          <section className="ind_post" key={p.id} id={`post--${p.id}`}>
+          <div className="post_title">
+            <b>{p.title}</b>
+          </div>
+          Post by&nbsp;
+            <Link className="post_user" to={`/profile/$`}>
+              {p.user?.user.first_name} {p.user?.user.last_name}
+            </Link>
+            <div className="post_publicatonDate" style={{fontSize: "10px"}}>{moment(p.publication_date).format("MMMM DD YYYY, h:mm a")}</div>
+            <Link to={`/posts/${p.id}`}>
+            <img src={p.image_url}
+            width="500px"
+            height="350px"
+            />
+            </Link>
+            <button
+                  className="edit_post" style={{fontSize:"10px"}}
+                  onClick={() => {
+                    history.push(`/posts/edit/${p.id}`);
+                  }}
+                  hidden={p.user.id === userId ? "" : "hidden"}
+                >
+                  Edit Post
+                </button>
+                &nbsp;
+              <button className="delete_post" style={{fontSize:"10px"}} onClick={handleRelease(p.id)} hidden={p.user.id === userId ? "" : "hidden"}>
+                Delete Post
+              </button>
+          </section>
+        )}
+      })}
+    </article>
+  );
+};
