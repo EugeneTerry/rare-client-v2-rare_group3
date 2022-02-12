@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useContext } from "react"
 import { useHistory } from 'react-router-dom'
 import { CategoryContext} from "./CategoryProvider"
-// import "./Categories.css"
+import "./Category.css"
 
 
 export const CategoryList = (props) => {
@@ -27,19 +27,19 @@ export const CategoryList = (props) => {
         <>
             <div className='categories'>
                 <h2 className='categories_title'>Categories</h2>
-                <button onClick={() => history.push("/categories/create")}>
+                <button className="button" onClick={() => history.push("/categories/create")}>
                     Create Category
                 </button>
                 <ul className='categories_list'>
                     {
                         categories.map(category => {
                             return (
-                                <li>
+                                <div>
                                     {category.label}
-                                    <button className='categories_edit'
+                                    <button className='button'
                                         onClick={() => { history.push(`/categories/edit/${category.id}`) }}>Edit</button>
-                                    <button onClick={() => { handleDelete(category.id) }}>Delete</button>
-                                </li>
+                                    <button className="button" onClick={() => { handleDelete(category.id) }}>Delete</button>
+                                </div>
                             )
                         })
                     }
