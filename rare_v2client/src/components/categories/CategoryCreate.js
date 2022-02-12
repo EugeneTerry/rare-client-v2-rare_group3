@@ -6,10 +6,11 @@ export const CategoryCreate = () => {
     const label = useRef()
     const history = useHistory()
     const {category_id} = useParams()
-    const { category, addCategory, getCategories, setCategory } = useContext(CategoryContext)
+    const { addCategory, getCategories } = useContext(CategoryContext)
 
+    const [category, setCategory]=useState({})
     useEffect(() => {
-        getCategories().then((data) => setCategory(data))
+        getCategories()
     }, [])
 
     const handleControlledInputChange = (event) => {
@@ -36,7 +37,7 @@ export const CategoryCreate = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="label">Category: </label>
-                    <input type="text" id="label" ref={category.label} required autoFocus className="form-control" placeholder="Category" onChange={handleControlledInputChange} DefaultValue={category.label} />
+                    <input type="text" id="label"  required autoFocus className="form-control" placeholder="Category" onChange={handleControlledInputChange} />
                 </div>
             </fieldset>
             <button type="submit"
