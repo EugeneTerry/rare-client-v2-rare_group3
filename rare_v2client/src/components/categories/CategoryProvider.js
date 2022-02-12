@@ -47,7 +47,7 @@ export const CategoryProvider = (props) => {
     }
 
     const editCategory = (category) => {
-        return fetch(`http://localhost:8000/tags/${category.id}`, {
+        return fetch(`http://localhost:8000/categories/${category.id}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
